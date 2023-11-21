@@ -21,10 +21,6 @@ class MovieListAdapter(
 ) :
     RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder)
-     */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val title: TextView
         val genre: TextView

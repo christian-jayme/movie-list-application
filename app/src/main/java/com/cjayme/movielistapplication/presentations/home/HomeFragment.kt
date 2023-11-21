@@ -1,13 +1,12 @@
 package com.cjayme.movielistapplication.presentations.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cjayme.movielistapplication.R
 import com.cjayme.movielistapplication.controllers.MovieController
@@ -20,13 +19,10 @@ import com.cjayme.movielistapplication.utils.Utils
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.HeroCarouselStrategy
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), OnMovieResultResponse  {
+class HomeFragment : Fragment(), OnMovieResultResponse, GenreListAdapter.OnItemClickListener  {
 
     @Inject
     lateinit var movieController: MovieController
@@ -46,16 +42,6 @@ class HomeFragment : Fragment(), OnMovieResultResponse  {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-//        _binding.apply {
-//            binding.rvGenreGroup.apply {
-//                adapter = GenreListAdapter(
-//                    movies,
-//                    uniqueGenres,
-//                    requireContext()
-//                )
-//            }
-//        }
-
         binding.apply {
             homeViewModel.movies.observe(viewLifecycleOwner) { result ->
                 val res = result.data?.results
@@ -67,9 +53,6 @@ class HomeFragment : Fragment(), OnMovieResultResponse  {
 
         return root
     }
-
-
-
     private fun setupCarousel(movies: List<Result>?) {
         val images = listOf(R.drawable._5, R.drawable._5, R.drawable._5, R.drawable._5)
         val rvCarousel = binding.rvCarousel
@@ -89,7 +72,8 @@ class HomeFragment : Fragment(), OnMovieResultResponse  {
         val genreListAdapter = GenreListAdapter(
             movies,
             uniqueGenres,
-            requireContext()
+            requireContext(),
+            this
         )
 
         val rvGenre = binding.rvGenreGroup
@@ -111,5 +95,10 @@ class HomeFragment : Fragment(), OnMovieResultResponse  {
 
     override fun onError(errorMessage: Int) {
         Utils.showErrorDialog(requireContext(), errorMessage)
+    }
+
+    override fun onItemClick(position: String, itemView: View) {
+        val action = HomeFragmentDirections.actionNavigationHomeToNavigationGenre(position)
+        Navigation.findNavController(itemView).navigate(action)
     }
 }

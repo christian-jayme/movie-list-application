@@ -5,20 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cjayme.movielistapplication.R
 import com.cjayme.movielistapplication.data.Result
-import com.cjayme.movielistapplication.presentations.home.HomeFragmentDirections
 
 
 class GenreListAdapter(
     private val results: List<Result>?,
     private val genres: List<String>?,
-    private val context: Context
+    private val context: Context,
+    private val listener: OnItemClickListener
 ) :
     RecyclerView.Adapter<GenreListAdapter.ViewHolder>() {
+
+    interface OnItemClickListener {
+        fun onItemClick(position: String, itemView: View)
+    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val genre: TextView
@@ -57,10 +60,7 @@ class GenreListAdapter(
 
         viewHolder.recycler.adapter = MovieListAdapter(results, context)
 
-        viewHolder.genre.setOnClickListener {
-            val action = HomeFragmentDirections.actionNavigationHomeToNavigationGenre(  genre)
-            Navigation.findNavController(viewHolder.itemView).navigate(action)
-        }
+        viewHolder.genre.setOnClickListener { listener.onItemClick(genre, viewHolder.itemView) }
     }
 
     private fun getMoviesByGenre(

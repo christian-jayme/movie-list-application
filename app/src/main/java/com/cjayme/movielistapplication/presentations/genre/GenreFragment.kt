@@ -12,18 +12,13 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cjayme.movielistapplication.controllers.MovieController
 import com.cjayme.movielistapplication.databinding.FragmentGenreBinding
-import com.cjayme.movielistapplication.listeners.OnMovieResultResponse
 import com.cjayme.movielistapplication.data.Result
 import com.cjayme.movielistapplication.presentations.adapter.MovieListAdapter
-import com.cjayme.movielistapplication.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GenreFragment : Fragment(), OnMovieResultResponse {
+class GenreFragment : Fragment() {
 
     @Inject
     lateinit var movieController: MovieController
@@ -43,24 +38,17 @@ class GenreFragment : Fragment(), OnMovieResultResponse {
             ViewModelProvider(this)[GenreViewModel::class.java]
 
         _binding = FragmentGenreBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-//        val textView: TextView = binding.textGenre
-//        favoriteViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val genreViewModel =
+            ViewModelProvider(this)[GenreViewModel::class.java]
 
         val tv: TextView = _binding!!.tvBack
         val genre = args.genre
-
-        CoroutineScope(Dispatchers.Main).launch {
-            setupListeners()
-        }
 
         tv.text = genre
         tv.setOnClickListener {
@@ -68,11 +56,15 @@ class GenreFragment : Fragment(), OnMovieResultResponse {
             Navigation.findNavController(view).navigate(action)
 
         }
-    }
 
-    private suspend fun setupListeners() {
-    }
+        binding.apply {
+            genreViewModel.movies.observe(viewLifecycleOwner) { result ->
+                val res = result.data?.results
+                setupGenreList(getMoviesByGenre(res))
+            }
+        }
 
+    }
     private fun setupGenreList(movies: List<Result>?) {
         val recycler = binding.rvMovies
         recycler.layoutManager = GridLayoutManager(requireContext(), 3)
@@ -87,13 +79,5 @@ class GenreFragment : Fragment(), OnMovieResultResponse {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onSuccess(movies: List<Result>?) {
-        setupGenreList(getMoviesByGenre(movies))
-    }
-
-    override fun onError(errorMessage: Int) {
-        Utils.showErrorDialog(requireContext(), errorMessage)
     }
 }
