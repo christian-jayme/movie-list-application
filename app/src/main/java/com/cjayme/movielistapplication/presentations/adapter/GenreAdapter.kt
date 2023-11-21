@@ -1,7 +1,6 @@
 package com.cjayme.movielistapplication.presentations.adapter
 
 import android.content.Context
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cjayme.movielistapplication.R
-import com.cjayme.movielistapplication.models.Result
+import com.cjayme.movielistapplication.data.Result
 import com.cjayme.movielistapplication.presentations.home.HomeFragmentDirections
 
 

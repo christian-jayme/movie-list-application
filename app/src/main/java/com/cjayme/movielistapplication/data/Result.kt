@@ -1,6 +1,12 @@
-package com.cjayme.movielistapplication.models
+package com.cjayme.movielistapplication.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+
+@Entity(tableName = "results")
 data class Result(
+    @PrimaryKey val id: Int,
     val artistName: String,
     val artworkUrl100: String,
     val artworkUrl30: String,

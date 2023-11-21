@@ -9,7 +9,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cjayme.movielistapplication.R
-import com.cjayme.movielistapplication.models.Result
+import com.cjayme.movielistapplication.data.Result
 import com.cjayme.movielistapplication.presentations.home.HomeFragmentDirections
 
 

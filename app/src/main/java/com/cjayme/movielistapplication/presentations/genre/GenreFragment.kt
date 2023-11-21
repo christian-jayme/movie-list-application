@@ -10,15 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.cjayme.movielistapplication.R
 import com.cjayme.movielistapplication.controllers.MovieController
 import com.cjayme.movielistapplication.databinding.FragmentGenreBinding
 import com.cjayme.movielistapplication.listeners.OnMovieResultResponse
-import com.cjayme.movielistapplication.models.Result
-import com.cjayme.movielistapplication.presentations.adapter.GenreListAdapter
+import com.cjayme.movielistapplication.data.Result
 import com.cjayme.movielistapplication.presentations.adapter.MovieListAdapter
-import com.cjayme.movielistapplication.presentations.home.HomeFragmentDirections
 import com.cjayme.movielistapplication.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -75,10 +71,6 @@ class GenreFragment : Fragment(), OnMovieResultResponse {
     }
 
     private suspend fun setupListeners() {
-        // Set the listener to receive movie results
-        movieController.setMovieResultListener(this)
-        // Call function to fetch movies
-        movieController.getMovies("star", "au", "movie")
     }
 
     private fun setupGenreList(movies: List<Result>?) {

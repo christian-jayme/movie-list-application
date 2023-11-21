@@ -1,6 +1,10 @@
 package com.cjayme.movielistapplication.network
 
+import android.app.Application
 import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import com.cjayme.movielistapplication.data.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +18,9 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RetrofitClient {
+object AppModule {
+
+    private const val BASE_URL = "https://itunes.apple.com/"
 
     @Provides
     @Singleton
@@ -35,7 +41,7 @@ object RetrofitClient {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://itunes.apple.com/") // Your base URL here
+            .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -45,4 +51,10 @@ object RetrofitClient {
     fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideDatabase(app: Application): AppDatabase =
+        Room.databaseBuilder(app, AppDatabase::class.java, "movie database")
+            .build()
 }

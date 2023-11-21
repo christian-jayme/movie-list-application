@@ -1,46 +1,34 @@
 package com.cjayme.movielistapplication.controllers
 
-import android.content.Context
-import com.cjayme.movielistapplication.R
-import com.cjayme.movielistapplication.listeners.OnMovieResultResponse
+import androidx.room.withTransaction
+import com.cjayme.movielistapplication.data.AppDatabase
 import com.cjayme.movielistapplication.network.ApiService
-import com.cjayme.movielistapplication.network.RetrofitClient
 import com.cjayme.movielistapplication.utils.Utils
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class MovieController @Inject constructor(
-    private val apiService: ApiService, private val context: Context
+    private val apiService: ApiService,
+    private val db : AppDatabase
 ) {
+    private val movieDao = db.movieDao()
 
-    // Listener instance
-    private var listener: OnMovieResultResponse? = null
-
-    // Function to set the listener
-    fun setMovieResultListener(listener: OnMovieResultResponse) {
-        this.listener = listener
-    }
-
-    suspend fun getMovies(term: String, country: String, media: String) {
-        if (!Utils.isNetworkAvailable(context)) {
-            listener?.onError(R.string.no_internet)
-        }
-
-         try {
-            val response = apiService.getMovieList(term, country, media)
-
-            if (response.resultCount > 0) {
-                // Return the list of movies if there are results
-                listener?.onSuccess(response.results )
-
-            } else {
-                // Return null or handle no results scenario
-                listener?.onError(R.string.unknown_err)
+    fun getMovies(
+        term: String,
+        country: String,
+        media: String) = Utils.networkBoundResource(
+            query = {
+                movieDao.getAllMovies()
+            },
+            fetch = {
+                delay(2000)
+                apiService.getMovieList(term, country, media)
+            },
+            saveFetchResult = {movies ->
+                db.withTransaction {
+                    movieDao.deleteAllResults()
+                    movieDao.insertMovies(movies)
+                }
             }
-        } catch (e: Exception) {
-            // Handle exceptions or errors (log/print for simplicity)
-            e.printStackTrace()
-            // Return null in case of any exception
-            listener?.onError(R.string.unknown_err)
-        }
-    }
+        )
 }

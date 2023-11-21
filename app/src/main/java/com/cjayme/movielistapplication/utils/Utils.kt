@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.appcompat.app.AlertDialog
 import com.cjayme.movielistapplication.R
+import kotlinx.coroutines.flow.*
 
 object Utils {
 
@@ -27,5 +28,27 @@ object Utils {
                 dialog.dismiss()
             }
             .show()
+    }
+
+    fun <ResultType, RequestType> networkBoundResource(
+        query: () -> Flow<ResultType>,
+        fetch: suspend () -> RequestType,
+        saveFetchResult: suspend (RequestType) -> Unit,
+        shouldFetch: (ResultType) -> Boolean = { true }
+    ) = flow {
+        val data = query().first()
+
+        val flow = if(shouldFetch(data)) {
+            emit(Resource.Loading(data))
+            try {
+                saveFetchResult(fetch())
+                query().map { Resource.Success(it) }
+            } catch (e: Throwable) {
+                query().map { Resource.Error(e,it) }
+            }
+        } else {
+            query().map { Resource.Success(it) }
+        }
+        emitAll(flow)
     }
 }

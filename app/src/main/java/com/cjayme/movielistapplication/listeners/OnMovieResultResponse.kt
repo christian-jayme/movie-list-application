@@ -1,6 +1,6 @@
 package com.cjayme.movielistapplication.listeners
 
-import com.cjayme.movielistapplication.models.Result
+import com.cjayme.movielistapplication.data.Result
 
 interface OnMovieResultResponse {
     fun onSuccess(movies: List<Result>?)
