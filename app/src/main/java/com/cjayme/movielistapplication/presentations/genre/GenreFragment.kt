@@ -1,24 +1,25 @@
 package com.cjayme.movielistapplication.presentations.genre
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cjayme.movielistapplication.controllers.MovieController
-import com.cjayme.movielistapplication.databinding.FragmentGenreBinding
 import com.cjayme.movielistapplication.data.Result
+import com.cjayme.movielistapplication.databinding.FragmentGenreBinding
 import com.cjayme.movielistapplication.presentations.adapter.MovieListAdapter
+import com.cjayme.movielistapplication.presentations.adapter.MovieListAdapter.OnItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GenreFragment : Fragment() {
+class GenreFragment : Fragment(), OnItemClickListener {
 
     @Inject
     lateinit var movieController: MovieController
@@ -63,12 +64,11 @@ class GenreFragment : Fragment() {
                 setupGenreList(getMoviesByGenre(res))
             }
         }
-
     }
     private fun setupGenreList(movies: List<Result>?) {
         val recycler = binding.rvMovies
         recycler.layoutManager = GridLayoutManager(requireContext(), 3)
-        recycler.adapter = MovieListAdapter(movies, requireContext())
+        recycler.adapter = MovieListAdapter(movies, requireContext(), this)
     }
     private fun getMoviesByGenre(
         movies: List<Result>?,
@@ -79,5 +79,10 @@ class GenreFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onItemClick(trackId: Int, itemView: View) {
+        val action = GenreFragmentDirections.actionNavigationGenreToNavigationDetail(trackId)
+        Navigation.findNavController(itemView).navigate(action)
     }
 }

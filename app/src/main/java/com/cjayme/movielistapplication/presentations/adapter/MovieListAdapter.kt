@@ -7,19 +7,22 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cjayme.movielistapplication.R
 import com.cjayme.movielistapplication.data.Result
-import com.cjayme.movielistapplication.presentations.genre.GenreFragmentDirections
 
 
 class MovieListAdapter(
     private val results: List<Result>?,
-    private val context: Context
+    private val context: Context,
+    private val listener: OnItemClickListener
 ) :
     RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int, itemView: View)
+    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val title: TextView
@@ -60,11 +63,7 @@ class MovieListAdapter(
             append(results[position].currency)
         }
         viewHolder.card.setOnClickListener {
-            ///TODO: This adapter was used by GenreFragment and HomeFragment
-            ///GenreFragmentDirections and HomeFragmentDirections
-            val action = GenreFragmentDirections.actionNavigationGenreToNavigationHome()
-
-            Navigation.findNavController(viewHolder.itemView).navigate(action)
+            listener.onItemClick(results[position].trackId, viewHolder.itemView)
         }
 
         Glide.with(context)

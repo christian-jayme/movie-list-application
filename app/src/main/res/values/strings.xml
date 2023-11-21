@@ -16,5 +16,7 @@
     <string name="ok">OK</string>
     <string name="price">9.99\n</string>
     <string name="back">Back</string>
+    <string name="short_description">Short Description:</string>
+    <string name="short_desc_sample">Get ready to rock! In this upbeat musical, Barbie™ stars as Princess Courtney, a modern princess</string>
 
 </resources>

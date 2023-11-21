@@ -1,9 +1,9 @@
 package com.cjayme.movielistapplication.utils
 
 import androidx.room.TypeConverter
-import com.google.gson.reflect.TypeToken
 import com.cjayme.movielistapplication.data.Result
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class Converters {
     @TypeConverter

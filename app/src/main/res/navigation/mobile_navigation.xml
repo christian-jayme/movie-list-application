@@ -76,6 +76,9 @@
             android:id="@+id/action_navigation_detail_to_navigation_favorite"
             app:destination="@id/navigation_favorite"
             app:exitAnim="@android:anim/slide_out_right"/>
+        <argument
+            android:name="trackId"
+            app:argType="integer" />
 
     </fragment>
 

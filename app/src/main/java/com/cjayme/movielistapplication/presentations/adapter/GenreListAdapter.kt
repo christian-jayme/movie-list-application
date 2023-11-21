@@ -5,22 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cjayme.movielistapplication.R
 import com.cjayme.movielistapplication.data.Result
+import com.cjayme.movielistapplication.presentations.adapter.MovieListAdapter.OnItemClickListener
+import com.cjayme.movielistapplication.presentations.home.HomeFragmentDirections
 
 
-class GenreListAdapter(
+class GenreListAdapter (
     private val results: List<Result>?,
     private val genres: List<String>?,
     private val context: Context,
-    private val listener: OnItemClickListener
+    private val listener: OnClickListener
 ) :
     RecyclerView.Adapter<GenreListAdapter.ViewHolder>() {
 
-    interface OnItemClickListener {
-        fun onItemClick(position: String, itemView: View)
+    interface OnClickListener {
+        fun onGenreClick(position: String, itemView: View)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -58,9 +61,15 @@ class GenreListAdapter(
 
         val results = getMoviesByGenre(genres, position)
 
-        viewHolder.recycler.adapter = MovieListAdapter(results, context)
+        viewHolder.recycler.adapter = MovieListAdapter(results, context,
+            object : OnItemClickListener {
+                override fun onItemClick(trackId: Int, itemView: View) {
+                    val action = HomeFragmentDirections.actionNavigationHomeToNavigationDetail(trackId)
+                    Navigation.findNavController(viewHolder.itemView).navigate(action)
+                }
+            })
 
-        viewHolder.genre.setOnClickListener { listener.onItemClick(genre, viewHolder.itemView) }
+        viewHolder.genre.setOnClickListener { listener.onGenreClick(genre, viewHolder.itemView) }
     }
 
     private fun getMoviesByGenre(
