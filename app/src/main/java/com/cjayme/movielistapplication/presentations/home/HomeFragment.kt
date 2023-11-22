@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cjayme.movielistapplication.R
-import com.cjayme.movielistapplication.controllers.MovieController
 import com.cjayme.movielistapplication.data.Result
 import com.cjayme.movielistapplication.databinding.FragmentHomeBinding
 import com.cjayme.movielistapplication.presentations.adapter.CarouselAdapter
@@ -21,9 +20,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), GenreListAdapter.OnClickListener  {
-
-    @Inject
-    lateinit var movieController: MovieController
 
     private var _binding: FragmentHomeBinding? = null
 

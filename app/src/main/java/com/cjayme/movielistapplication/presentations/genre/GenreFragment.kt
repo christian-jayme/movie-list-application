@@ -21,9 +21,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class GenreFragment : Fragment(), OnItemClickListener {
 
-    @Inject
-    lateinit var movieController: MovieController
-
     private var _binding: FragmentGenreBinding? = null
 
     private val binding get() = _binding!!
@@ -81,8 +78,8 @@ class GenreFragment : Fragment(), OnItemClickListener {
         _binding = null
     }
 
-    override fun onItemClick(trackId: Int, itemView: View) {
-        val action = GenreFragmentDirections.actionNavigationGenreToNavigationDetail(trackId)
+    override fun onItemClick(position: Int, itemView: View) {
+        val action = GenreFragmentDirections.actionNavigationGenreToNavigationDetail(position)
         Navigation.findNavController(itemView).navigate(action)
     }
 }
