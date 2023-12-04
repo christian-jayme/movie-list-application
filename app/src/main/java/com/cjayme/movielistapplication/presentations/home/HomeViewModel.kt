@@ -1,7 +1,5 @@
 package com.cjayme.movielistapplication.presentations.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.cjayme.movielistapplication.controllers.MovieController
@@ -16,10 +14,4 @@ class HomeViewModel @Inject constructor (
     val movies = controller
         .getMovies("star", "au", "movie")
         .asLiveData()
-
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-    val text: LiveData<String> = _text
 }

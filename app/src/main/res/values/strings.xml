@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Movie List Application</string>
+    <string name="app_name">Movie Application</string>
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
     <string name="title_favorite">Favorites</string>
@@ -18,5 +18,7 @@
     <string name="back">Back</string>
     <string name="short_description">Short Description:</string>
     <string name="short_desc_sample">Get ready to rock! In this upbeat musical, Barbie™ stars as Princess Courtney, a modern princess</string>
+    <string name="content_description">Content description</string>
+    <string name="full_description">Full Description:</string>
 
 </resources>

@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 object Utils {
 
@@ -54,5 +57,19 @@ object Utils {
             query().map { Resource.Success(it) }
         }
         emitAll(flow)
+    }
+
+    fun convertDate (date: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMMM yyyy, HH:mm:ss", Locale.getDefault())
+
+        try {
+            val parsedDate: Date = inputFormat.parse(date) ?: Date()
+            return outputFormat.format(parsedDate)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return ""
     }
 }
