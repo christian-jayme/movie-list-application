@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:ignore="RtlHardcoded"
     tools:context=".presentations.detail.DetailFragment">
 
     <ScrollView
@@ -15,8 +16,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:orientation="vertical">
+
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,33 +73,35 @@
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical"
+                        android:paddingBottom="2dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Release Date: "/>
+                            android:textStyle="bold"
+                            android:text="@string/release_date_label"/>
 
                         <TextView
                             android:id="@+id/tv_release_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Release Date" />
+                            android:text="@string/release_date" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Artist: "/>
+                            android:textStyle="bold"
+                            android:text="@string/artist_label"/>
 
                         <TextView
                             android:id="@+id/tv_artist"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Artist" />
+                            android:text="@string/artist" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -108,7 +111,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Genre: "/>
+                            android:textStyle="bold"
+                            android:text="@string/genre_label"/>
 
                         <TextView
                             android:id="@+id/tv_genre"
@@ -123,7 +127,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/price" />
+                            android:textStyle="bold"
+                            android:text="@string/price_label" />
 
                         <TextView
                             android:id="@+id/tv_price"
@@ -137,9 +142,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:text="Add to favorite" />
-
+                        style="?attr/materialIconButtonOutlinedStyle"
+                        android:drawableLeft="@drawable/baseline_add_24"
+                        android:drawablePadding="4dp"
+                        android:visibility="visible"
+                        android:text="@string/add_to_favorite" />
+                    <Button
+                        android:id="@+id/btn_added_to_favorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:visibility="gone"
+                        style="?attr/materialIconButtonFilledTonalStyle"
+                        android:backgroundTint="@color/white"
+                        android:drawableLeft="@drawable/baseline_delete_outline_24"
+                        android:drawablePadding="4dp"
+                        android:text="@string/remove_from_favorite" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -20,5 +20,14 @@
     <string name="short_desc_sample">Get ready to rock! In this upbeat musical, Barbie™ stars as Princess Courtney, a modern princess</string>
     <string name="content_description">Content description</string>
     <string name="full_description">Full Description:</string>
+    <string name="price_label">Price: </string>
+    <string name="genre_label">Genre: </string>
+    <string name="artist_label">Artist: </string>
+    <string name="release_date_label">Release Date: </string>
+    <string name="add_to_favorite">Add to favorite</string>
+    <string name="movies_you_like">Movies you like</string>
+    <string name="remove_from_favorite">Remove from favorite</string>
+    <string name="release_date">Release Date</string>
+    <string name="artist">Artist</string>
 
 </resources>

@@ -10,8 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.cjayme.movielistapplication.data.Result
+import com.cjayme.movielistapplication.data.model.Result
 import com.cjayme.movielistapplication.databinding.FragmentSearchBinding
 import com.cjayme.movielistapplication.presentations.adapter.SearchAdapter
 import com.cjayme.movielistapplication.presentations.adapter.SearchAdapter.OnClickListener

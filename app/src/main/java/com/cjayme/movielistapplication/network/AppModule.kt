@@ -3,7 +3,8 @@ package com.cjayme.movielistapplication.network
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import com.cjayme.movielistapplication.data.AppDatabase
+import com.cjayme.movielistapplication.BaseApplication
+import com.cjayme.movielistapplication.data.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,8 +24,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideContext(@ApplicationContext appContext: Context): Context {
-        return appContext
+    fun provideContext(@ApplicationContext appContext: Context): BaseApplication {
+        return appContext as BaseApplication
     }
 
     @Provides

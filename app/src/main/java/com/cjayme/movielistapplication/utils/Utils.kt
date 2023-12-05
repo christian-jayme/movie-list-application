@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.appcompat.app.AlertDialog
 import com.cjayme.movielistapplication.R
+import com.cjayme.movielistapplication.data.model.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
@@ -14,8 +15,13 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-object Utils {
+private const val SHARED_PREF = "SaveDataPreference"
 
+object Utils {
+    const val GENRE_FRAGMENT = "GenreFragment"
+    const val HOME_FRAGMENT = "HomeFragment"
+    const val SEARCH_FRAGMENT = "SearchFragment"
+    const val FAVORITE_FRAGMENT = "FavoriteFragment"
     fun isNetworkAvailable(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
@@ -61,7 +67,7 @@ object Utils {
 
     fun convertDate (date: String): String {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-        val outputFormat = SimpleDateFormat("dd MMMM yyyy, HH:mm:ss", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
 
         try {
             val parsedDate: Date = inputFormat.parse(date) ?: Date()
@@ -71,5 +77,50 @@ object Utils {
         }
 
         return ""
+    }
+
+    fun saveFavoriteToList(context: Context, key: String, value: String) {
+        val sharedPref = context.getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
+        val list = sharedPref.getStringSet(key, null) ?: mutableSetOf()
+        val listCopy = list.toMutableSet()
+
+        listCopy.add(value)
+
+        with (sharedPref.edit()) {
+            putStringSet(key, listCopy)
+            apply()
+        }
+    }
+
+    fun removeFavoriteFromList(context: Context, key: String, value: String) {
+        val sharedPref = context.getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
+        val list = sharedPref.getStringSet(key, null) ?: return
+        val listCopy = list.toMutableSet()
+
+        listCopy.remove(value)
+
+        with (sharedPref.edit()) {
+            putStringSet(key, listCopy)
+            apply()
+        }
+    }
+
+    fun getFavoriteList(context: Context, key: String): List<String>? {
+        val sharedPref = context.getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
+        return sharedPref.getStringSet(key, null)?.toList()
+    }
+
+    fun isDataExistsInFavoriteList(context: Context, key: String, data: String): Boolean {
+        val sharedPref = context.getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
+        val list = sharedPref.getStringSet(key, null) ?: return false
+        return list.contains(data)
+    }
+
+    fun getFavoriteMovie(context: Context, res: List<Result>?): List<Result>? {
+        val favoriteMovies = getFavoriteList(context, "track_id")
+
+        return res?.filter { movie ->
+            favoriteMovies!!.contains(movie.trackId.toString())
+        }
     }
 }

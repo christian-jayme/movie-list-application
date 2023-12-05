@@ -1,7 +1,5 @@
 package com.cjayme.movielistapplication.presentations.detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.cjayme.movielistapplication.controllers.MovieController
@@ -16,9 +14,4 @@ class DetailViewModel @Inject constructor(
     val movies = controller
         .getMovies("star", "au", "movie")
         .asLiveData()
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is Detail Fragment"
-    }
-    val text: LiveData<String> = _text
 }

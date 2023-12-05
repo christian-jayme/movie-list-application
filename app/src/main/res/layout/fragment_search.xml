@@ -55,7 +55,7 @@
             android:paddingEnd="14dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:listitem="@layout/listview_searched_item" />
+            tools:listitem="@layout/listview_list_item" />
 
     </LinearLayout>
 

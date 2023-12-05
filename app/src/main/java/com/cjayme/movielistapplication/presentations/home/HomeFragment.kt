@@ -9,14 +9,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cjayme.movielistapplication.R
-import com.cjayme.movielistapplication.data.Result
+import com.cjayme.movielistapplication.data.model.Result
 import com.cjayme.movielistapplication.databinding.FragmentHomeBinding
 import com.cjayme.movielistapplication.presentations.adapter.CarouselAdapter
 import com.cjayme.movielistapplication.presentations.adapter.GenreListAdapter
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.HeroCarouselStrategy
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), GenreListAdapter.OnClickListener  {

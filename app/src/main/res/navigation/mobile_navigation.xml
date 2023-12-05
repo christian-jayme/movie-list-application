@@ -61,10 +61,6 @@
             android:id="@+id/action_navigation_favorite_to_navigation_home"
             app:destination="@id/navigation_home"
             app:exitAnim="@android:anim/slide_out_right"/>
-        <action
-            android:id="@+id/action_navigation_favorite_to_navigation_detail2"
-            app:destination="@id/navigation_detail"
-            app:exitAnim="@android:anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -79,6 +75,10 @@
         <argument
             android:name="trackId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_navigation_detail_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:exitAnim="@android:anim/slide_out_right"/>
 
     </fragment>
 

@@ -1,7 +1,7 @@
 package com.cjayme.movielistapplication.controllers
 
 import androidx.room.withTransaction
-import com.cjayme.movielistapplication.data.AppDatabase
+import com.cjayme.movielistapplication.data.database.AppDatabase
 import com.cjayme.movielistapplication.network.ApiService
 import com.cjayme.movielistapplication.utils.Utils
 import kotlinx.coroutines.delay

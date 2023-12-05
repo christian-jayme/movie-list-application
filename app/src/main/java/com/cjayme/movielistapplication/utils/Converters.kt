@@ -1,7 +1,7 @@
 package com.cjayme.movielistapplication.utils
 
 import androidx.room.TypeConverter
-import com.cjayme.movielistapplication.data.Result
+import com.cjayme.movielistapplication.data.model.Result
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

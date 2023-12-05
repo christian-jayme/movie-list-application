@@ -1,6 +1,6 @@
 package com.cjayme.movielistapplication.network
 
-import com.cjayme.movielistapplication.data.Movie
+import com.cjayme.movielistapplication.data.model.Movie
 import retrofit2.http.GET
 import retrofit2.http.Query
 

@@ -1,8 +1,6 @@
 package com.cjayme.movielistapplication.presentations.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,34 +12,15 @@ import com.bumptech.glide.Glide
 import com.cjayme.movielistapplication.R
 import com.cjayme.movielistapplication.data.model.Result
 
-class SearchAdapter(
+
+class FavoriteAdapter(
     private val context: Context,
     private var results: List<Result>?,
     private val listener: OnClickListener
-) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
 
     interface OnClickListener {
         fun onItemClick(position: Int, itemView: View)
-    }
-
-    private var filteredData: List<Result>? = listOf()
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun filter(query: String) {
-
-        val tempResult = results!!.filter {
-            it.trackName.contains(query, ignoreCase = true) ||
-            it.primaryGenreName.contains(query, ignoreCase = true) ||
-            it.artistName.contains(query, ignoreCase = true)
-        }
-
-        filteredData = if(tempResult.isEmpty() && query.isEmpty()) {
-            listOf()
-        } else {
-            tempResult
-        }
-
-        notifyDataSetChanged()
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -69,7 +48,6 @@ class SearchAdapter(
         // create view holder
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.listview_list_item, viewGroup, false)
-        Log.d("CHUCHU", "filter: ${filteredData!!.size}")
         return ViewHolder(view)
     }
 
@@ -77,8 +55,7 @@ class SearchAdapter(
         // bind data to view holder
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        Log.d("CHUCHU", "onBindViewHolder")
-        val item = filteredData!![position]
+        val item = results!![position]
 
         viewHolder.title.text = item.trackName
         viewHolder.genre.text = item.primaryGenreName
@@ -101,6 +78,6 @@ class SearchAdapter(
     }
 
     override fun getItemCount(): Int {
-        return filteredData!!.size
+        return results!!.size
     }
 }

@@ -3,7 +3,6 @@ package com.cjayme.movielistapplication.presentations
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cjayme.movielistapplication.R

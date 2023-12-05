@@ -10,16 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import com.cjayme.movielistapplication.controllers.MovieController
-import com.cjayme.movielistapplication.data.Result
+import com.cjayme.movielistapplication.data.model.Result
 import com.cjayme.movielistapplication.databinding.FragmentGenreBinding
 import com.cjayme.movielistapplication.presentations.adapter.MovieListAdapter
-import com.cjayme.movielistapplication.presentations.adapter.MovieListAdapter.OnItemClickListener
+import com.cjayme.movielistapplication.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class GenreFragment : Fragment(), OnItemClickListener {
+class GenreFragment : Fragment() {
 
     private var _binding: FragmentGenreBinding? = null
 
@@ -32,8 +30,6 @@ class GenreFragment : Fragment(), OnItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val genreViewModel =
-            ViewModelProvider(this)[GenreViewModel::class.java]
 
         _binding = FragmentGenreBinding.inflate(inflater, container, false)
 
@@ -65,8 +61,9 @@ class GenreFragment : Fragment(), OnItemClickListener {
     private fun setupGenreList(movies: List<Result>?) {
         val recycler = binding.rvMovies
         recycler.layoutManager = GridLayoutManager(requireContext(), 3)
-        recycler.adapter = MovieListAdapter(movies, requireContext(), this)
+        recycler.adapter = MovieListAdapter(movies, requireContext(), Utils.GENRE_FRAGMENT)
     }
+
     private fun getMoviesByGenre(
         movies: List<Result>?,
     ) = movies!!.filter {
@@ -76,10 +73,5 @@ class GenreFragment : Fragment(), OnItemClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onItemClick(position: Int, itemView: View) {
-        val action = GenreFragmentDirections.actionNavigationGenreToNavigationDetail(position)
-        Navigation.findNavController(itemView).navigate(action)
     }
 }
