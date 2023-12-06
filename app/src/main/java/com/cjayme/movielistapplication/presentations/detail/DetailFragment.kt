@@ -1,5 +1,6 @@
 package com.cjayme.movielistapplication.presentations.detail
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -65,16 +66,23 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val trackId = args.trackId
-        setInitialFavoriteButton(trackId.toString())
+        val trackId = args.trackId.toString()
+        setInitialFavoriteButton(trackId)
+        saveDateViewed(trackId)
     }
+
+    private fun saveDateViewed (trackId: String) {
+        if(Utils.getViewDateList(requireContext(), trackId).isNullOrBlank()) {
+            Utils.saveViewDateToList(requireContext(), trackId)
+        }
+    }
+
 
     private fun updateFavoriteButton(isAdded: Boolean, res: Result?) {
         when (isAdded) {
             true -> {
                 Utils.saveFavoriteToList(
                     requireContext(),
-                    "track_id",
                     res!!.trackId.toString()
                 )
                 binding.btnAddToFavorite.visibility = View.GONE
@@ -83,7 +91,6 @@ class DetailFragment : Fragment() {
             false -> {
                 Utils.removeFavoriteFromList(
                     requireContext(),
-                    "track_id",
                     res!!.trackId.toString()
                 )
                 binding.btnAddToFavorite.visibility = View.VISIBLE
@@ -95,7 +102,6 @@ class DetailFragment : Fragment() {
     private fun setInitialFavoriteButton(trackId: String) {
         when (Utils.isDataExistsInFavoriteList(
             requireContext(),
-            "track_id",
             trackId
         )) {
             true -> {

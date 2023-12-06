@@ -75,6 +75,16 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/tv_recently_viewed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:padding="4dp"
+            android:textSize="11sp"
+            android:visibility="invisible"
+            android:background="#80000000"
+            android:text="@string/viewed_last_12_6_2023" />
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

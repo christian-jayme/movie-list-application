@@ -28,6 +28,7 @@ class MovieListAdapter(
         val title: TextView
         val genre: TextView
         val price: TextView
+        val viewed: TextView
         val image: ImageView
         val card: CardView
         val star: ImageView
@@ -39,6 +40,7 @@ class MovieListAdapter(
             star = view.findViewById(R.id.iv_star)
             genre = view.findViewById(R.id.tv_genre)
             price = view.findViewById(R.id.tv_price)
+            viewed = view.findViewById(R.id.tv_recently_viewed)
             card = view.findViewById(R.id.cv_movie_item)
         }
     }
@@ -67,6 +69,18 @@ class MovieListAdapter(
             append(result.currency)
         }
 
+        when (!Utils.getViewDateList(context,result.trackId.toString()).isNullOrBlank()) {
+            true -> {
+                val result = Utils.getViewDateList(context,result.trackId.toString())
+                val finalString = "Viewed on ${result!!.split(":")[0]}"
+                viewHolder.viewed.visibility = View.VISIBLE
+                viewHolder.viewed.text = finalString
+            }
+            false -> {
+                viewHolder.viewed.visibility = View.INVISIBLE
+            }
+        }
+
         viewHolder.card.setOnClickListener {
             val action = when (fragment) {
                 Utils.GENRE_FRAGMENT -> GenreFragmentDirections.actionNavigationGenreToNavigationDetail(result.trackId)
@@ -89,7 +103,6 @@ class MovieListAdapter(
     private fun initialStarIcon(result: Result): Int {
         return when(Utils.isDataExistsInFavoriteList(
             context,
-            "track_id",
             result.trackId.toString()
         )) {
             true -> {
@@ -104,13 +117,11 @@ class MovieListAdapter(
     private fun updateStarIcon(result: Result, viewHolder: ViewHolder) {
         when(Utils.isDataExistsInFavoriteList(
             context,
-            "track_id",
             result.trackId.toString()
         )) {
             true -> {
                 Utils.removeFavoriteFromList(
                     context,
-                    "track_id",
                     result.trackId.toString()
                 )
                 viewHolder.star.setImageResource(R.drawable.round_gray_star_rate_24)
@@ -118,7 +129,6 @@ class MovieListAdapter(
             false -> {
                 Utils.saveFavoriteToList(
                     context,
-                    "track_id",
                     result.trackId.toString()
                 )
                 viewHolder.star.setImageResource(R.drawable.round_gold_star_rate_24)

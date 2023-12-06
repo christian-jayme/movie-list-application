@@ -16,10 +16,4 @@ class SearchViewModel @Inject constructor (
     val movies = controller
         .getMovies("star", "au", "movie")
         .asLiveData()
-
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is search Fragment"
-    }
-    val text: LiveData<String> = _text
 }

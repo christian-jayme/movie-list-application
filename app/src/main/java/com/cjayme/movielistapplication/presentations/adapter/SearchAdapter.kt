@@ -29,13 +29,11 @@ class SearchAdapter(
     @SuppressLint("NotifyDataSetChanged")
     fun filter(query: String) {
 
-        val tempResult = results!!.filter {
-            it.trackName.contains(query, ignoreCase = true) ||
-            it.primaryGenreName.contains(query, ignoreCase = true) ||
-            it.artistName.contains(query, ignoreCase = true)
+        val tempResult = results?.filter {
+            it.trackName.contains(query, ignoreCase = true)
         }
 
-        filteredData = if(tempResult.isEmpty() && query.isEmpty()) {
+        filteredData = if(tempResult.isNullOrEmpty() || query.isEmpty()) {
             listOf()
         } else {
             tempResult
