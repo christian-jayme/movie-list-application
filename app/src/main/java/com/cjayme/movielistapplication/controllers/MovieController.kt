@@ -8,8 +8,8 @@ import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class MovieController @Inject constructor(
-    private val apiService: ApiService,
-    private val db : AppDatabase
+    val apiService: ApiService,
+    val db : AppDatabase
 ) {
     private val movieDao = db.movieDao()
 
