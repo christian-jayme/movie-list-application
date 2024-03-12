@@ -5,6 +5,13 @@
 
 An application that utilizes the iTunes Movie API. The app allows users to explore movies, mark favorites, perform searches, and access detailed information about each movie.
 
+## Screenshot
+<p align="center">
+  <img src="app/src/main/res/assets/screenshot.png" alt="Screenshot of the application in Dark mode">
+  <br>
+  <em>Dark mode</em>
+</p>
+
 ## Features
 
 ### Favorite Movies
